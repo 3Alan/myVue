@@ -4,6 +4,7 @@ class myVue{
     this.$data = options.data;
     this.$el = document.querySelector(options.el); // 挂载的节点
 
+    /* vm.$data.props 可以用 vm.props来替代*/
     Object.keys(this.$data).forEach(key => {
       this.ProxyData(key);
     });

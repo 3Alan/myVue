@@ -4,11 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <link rel="stylesheet" href="./index.css">
 </head>
 <body>
   <div id="app">
     <input type="text" v-model="content">
     <h1>{{content}}</h1>
+    <div class="btn" v-on:click="showMsg">点击我</div>
   </div>
   <script src="./observer.js"></script>
   <script src="./watcher.js"></script>
@@ -19,6 +21,11 @@
       el: '#app',
       data: {
         content: '学习Vue双向绑定',
+      },
+      methods: {
+        showMsg() {
+          this.content = '重新学习'
+        }
       }
     });
   </script>

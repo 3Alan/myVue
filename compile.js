@@ -6,7 +6,8 @@ class Compile {
     this.init();
   }
   init() {
-    // 为了提高性能
+    /* 为了提高性能，将dom转化为文档片段，所有视图的更新都是在文档片段中完成的，由于文档
+    碎片不是真实DOM树的一部分，它的变化不会触发DOM树的重新渲染，所以不会导致性能问题*/
     this.fragment = this.nodeFragment(this.el);
     this.compileNode(this.fragment);
     this.el.appendChild(this.fragment);
@@ -20,6 +21,7 @@ class Compile {
     }
     return fragment;
   }
+
   compileNode(fragment) {
     let childNodes = fragment.childNodes;
     [...childNodes].forEach(node => {
@@ -55,11 +57,19 @@ class Compile {
         if (name === "v-model") {
           this.compileModel(node, value);
         } 
-        // else if (name === "v-on"){
-          
-        // }
+        else if (name.indexOf('v-on') === 0){
+          this.compileEvent(node, name, value)
+        }
       }
     });
+  }
+
+  compileEvent(node, name, value) {
+    const eventType = name.split(':')[1]; // 时间类型如：click
+    const callback = this.vm.$options.methods && this.vm.$options.methods[value]; // 事件名
+    if (eventType && callback) {
+      node.addEventListener(eventType, callback.bind(this.vm), false);
+    }
   }
 
   compileModel(node, prop) {
@@ -76,7 +86,7 @@ class Compile {
       if (val === newValue) {
         return;
       }
-      this.vm.$data[prop] = newValue;
+      this.vm.$data[prop] = newValue; // 这里触发了observer中的set
     });
   }
 
@@ -88,17 +98,8 @@ class Compile {
     });
   }
 
-  compileEvent(node, vm, exp, dir) {
-    var eventType = dir.split(':')[1];
-    var cb = vm.methods && vm.methods[exp];
-
-    if (eventType && cb) {
-        node.addEventListener(eventType, cb.bind(vm), false);
-    }
-  } 
-
   updateModel(node, value) {
-    node.value = typeof value == 'undefined' ? '' : value;
+    node.value = typeof value === 'undefined' ? '' : value;
   }
 
   updateView(node, value) {

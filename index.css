@@ -1,0 +1,28 @@
+#app {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 30px;
+}
+h1 {
+  font-size: 28px;
+}
+input {
+  padding: 20px;
+  width: 600px;
+}
+.btn {
+  width: 600px;
+  padding: 20px;
+  border: none;
+  color: #FFF;
+  text-align: center;
+  border-radius: 10px;
+  background: linear-gradient(left, #36b4f8, #027ec3 100%);
+  background: -moz-linear-gradient(left, #36b4f8, #027ec3 100%);
+  background: -webkit-linear-gradient(left, #36b4f8, #027ec3 100%);
+}
+.btn:hover {
+  opacity: 0.7;
+}
