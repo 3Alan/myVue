@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <input type="text" v-model="content">
+    <h1>{{content}}</h1>
+  </div>
+  <script src="./observer.js"></script>
+  <script src="./watcher.js"></script>
+  <script src="./compile.js"></script>
+  <script src="./index.js"></script>
+  <script>
+    const vm = new myVue({
+      el: '#app',
+      data: {
+        content: '学习Vue双向绑定',
+      }
+    });
+  </script>
+</body>
+</html>
